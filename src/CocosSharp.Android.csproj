@@ -11,7 +11,7 @@
     <AssemblyName>CocosSharp</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <TargetFrameworkVersion>v4.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -39,14 +39,18 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Mono.Android" />
+    <Reference Include="Mono.Android">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="mscorlib" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="OpenTK-1.0" />
+    <Reference Include="OpenTK-1.0">
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Math\CCEaseMath.cs" />
@@ -360,15 +364,7 @@
   <ItemGroup />
   <ItemGroup />
   <ItemGroup />
-  <ItemGroup>
-    <Folder Include="EmbeddableView\" />
-    <Folder Include="Actions\" />
-    <Folder Include="Nodes\" />
-    <Folder Include="Camera\" />
-    <Folder Include="Support\" />
-    <Folder Include="Audio\" />
-    <Folder Include="Math\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\MonoGame\MonoGame.Framework\MonoGame.Framework.Android.csproj">
@@ -380,4 +376,7 @@
       <Name>Lidgren.Network.Android</Name>
     </ProjectReference>
   </ItemGroup>
+  <PropertyGroup>
+    <PostBuildEvent>copy /y "$(TargetDir)CocosSharp.*" "C:\Users\Marc\Documents\AsyncGame\AsyncGame\game\lib"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
