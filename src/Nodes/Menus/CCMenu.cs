@@ -275,7 +275,7 @@ namespace CocosSharp
                 {
                     if (menuItem != null && menuItem.Visible && menuItem.Enabled)
                     {
-                        CCRect r = menuItem.BoundingBoxTransformedToWorld;
+                        CCRect r = menuItem.BoundingBoxTransformedToLayer;
 
                         if (r.ContainsPoint(touchLocation))
                         {

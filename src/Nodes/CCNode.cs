@@ -611,6 +611,21 @@ namespace CocosSharp
             }
         }
 
+        // Returns the bounding box of this node including all children nodes
+        public CCRect BoundingBoxCascade
+        {
+            get
+            {
+                var bb = BoundingBox;
+
+                if (ChildrenCount > 0)
+                    foreach (var child in Children)
+                        bb = CCRect.Union(bb, child.BoundingBoxCascade);
+                
+                return bb;
+            }
+        }
+
         // Bounding box after scale/rotation/skew in parent space
         public CCRect BoundingBoxTransformedToParent
         {
@@ -630,6 +645,39 @@ namespace CocosSharp
                 CCAffineTransform localTransform = AffineWorldTransform;
                 CCRect worldtransformedBounds = localTransform.Transform(new CCRect(0.0f, 0.0f, ContentSize.Width, ContentSize.Height));
                 return worldtransformedBounds; 
+            }
+        }
+
+        // Bounding box after scale/position of layer
+        public CCRect BoundingBoxTransformedToLayer
+        {
+            get
+            {
+                var transformedBoundingBox = BoundingBox;
+
+                transformedBoundingBox.Size.Width *= Layer.ScaleX;
+                transformedBoundingBox.Size.Height *= Layer.ScaleY;
+                transformedBoundingBox.Origin.X = (PositionWorldspace.X * Layer.ScaleX) + Layer.PositionX - AnchorPointInPoints.X;
+                transformedBoundingBox.Origin.Y = (PositionWorldspace.Y * Layer.ScaleY) + Layer.PositionY - AnchorPointInPoints.Y;
+
+                return transformedBoundingBox;
+            }
+        }
+
+        /// <summary>
+        /// Bounding box after scale/rotation/skew in world space including all children (recursive)
+        /// </summary>
+        public CCRect BoundingBoxCascadeTransformedToWorld
+        {
+            get
+            {
+                var bb = BoundingBoxTransformedToWorld;
+
+                if (ChildrenCount > 0)
+                    foreach (var child in Children)
+                        bb = CCRect.Union(bb, child.BoundingBoxTransformedToWorld);
+
+                return bb;
             }
         }
 
